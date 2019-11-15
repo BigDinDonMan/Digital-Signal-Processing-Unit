@@ -97,7 +97,7 @@ namespace SignalProcessingUnit {
                 _startPosition = e.Location;
                 _mouseDragging = true;
                 _mousePosition = new Point(-1, -1);
-                this._verticalLineCoords.Add(e.X);
+              //  this._verticalLineCoords.Add(e.X);
                 this.Invalidate();
             }
             base.OnMouseDown(e);
@@ -121,14 +121,17 @@ namespace SignalProcessingUnit {
 
         protected override void OnMouseMove(MouseEventArgs e) {
             if (_mouseDragging) {
-                this._verticalLineCoords.Add(_startPosition.X);
-                this._verticalLineCoords.Add(e.X);
+               // this._verticalLineCoords.Add(_startPosition.X);
+              //  this._verticalLineCoords.Add(e.X);
                 if (_mousePosition.X != -1) {
-                    this._verticalLineCoords.Add(_mousePosition.X);
+                 //   this._verticalLineCoords.Add(_mousePosition.X);
                     int x1, x2;
                     x1 = _mousePosition.X;
                     x2 = _startPosition.X;
-                    if (x2 > x1) GeneralUtilities.Swap(ref x2, ref x1);
+                    if (x2 > x1) {
+                        GeneralUtilities.Swap(ref x2, ref x1);
+                    }
+
                     this._selection = new Rectangle(x2, 0, x1 - x2, this.Height);
                 }
                 _mousePosition = e.Location;

@@ -69,6 +69,75 @@
     <Compile Include="TrackViewer.Designer.cs">
       <DependentUpon>TrackViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\EffectParametresWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Effects\DelayWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Effects\DelayWindow.Designer.cs">
+      <DependentUpon>DelayWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Effects\DistortionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Effects\DistortionWindow.Designer.cs">
+      <DependentUpon>DistortionWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Effects\EchoWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Effects\EchoWindow.Designer.cs">
+      <DependentUpon>EchoWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Effects\FlangerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Effects\FlangerWindow.Designer.cs">
+      <DependentUpon>FlangerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Effects\PhaserWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Effects\PhaserWindow.Designer.cs">
+      <DependentUpon>PhaserWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Filters\BandpassWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Filters\BandpassWindow.Designer.cs">
+      <DependentUpon>BandpassWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Filters\BandstopWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Filters\BandstopWindow.Designer.cs">
+      <DependentUpon>BandstopWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Filters\HighpassWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Filters\HighpassWindow.Designer.cs">
+      <DependentUpon>HighpassWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Filters\LowpassWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Filters\LowpassWindow.Designer.cs">
+      <DependentUpon>LowpassWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Processing\RaiseSignalVolumeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Processing\RaiseSignalVolumeWindow.Designer.cs">
+      <DependentUpon>RaiseSignalVolumeWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Processing\SmoothSignalWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Processing\SmoothSignalWindow.Designer.cs">
+      <DependentUpon>SmoothSignalWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -86,6 +155,42 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TrackViewer.resx">
       <DependentUpon>TrackViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\EffectParametresWindow.resx">
+      <DependentUpon>EffectParametresWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Effects\DelayWindow.resx">
+      <DependentUpon>DelayWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Effects\DistortionWindow.resx">
+      <DependentUpon>DistortionWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Effects\EchoWindow.resx">
+      <DependentUpon>EchoWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Effects\FlangerWindow.resx">
+      <DependentUpon>FlangerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Effects\PhaserWindow.resx">
+      <DependentUpon>PhaserWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Filters\BandpassWindow.resx">
+      <DependentUpon>BandpassWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Filters\BandstopWindow.resx">
+      <DependentUpon>BandstopWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Filters\HighpassWindow.resx">
+      <DependentUpon>HighpassWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Filters\LowpassWindow.resx">
+      <DependentUpon>LowpassWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Processing\RaiseSignalVolumeWindow.resx">
+      <DependentUpon>RaiseSignalVolumeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Processing\SmoothSignalWindow.resx">
+      <DependentUpon>SmoothSignalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -110,5 +215,6 @@
       <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

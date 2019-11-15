@@ -96,9 +96,9 @@ namespace SignalProcessingUnit {
                             MessageBox.Show("Only .wav files are supported!");
                             return;
                         }
-                        var wavFile = SoundProcessing.ReadWavFile(files[0]);
+                        var wavFile = SoundManipulation.SoundProcessing.ReadWavFile(files[0]);
                         
-                        var time = SoundProcessing.GetSoundDuration(files[0]);
+                        var time = SoundManipulation.SoundProcessing.GetSoundDuration(files[0]);
                         if (this.TimelineLength.CompareTo(time) < 0) {
                             this.TimelineLength = time;
                         }
