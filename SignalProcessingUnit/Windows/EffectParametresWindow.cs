@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,12 @@ using System.Windows.Forms;
 namespace SignalProcessingUnit.Windows {
     public class EffectParametresWindow : Form {
         public double[] BufferToModify { get; set; }
+        public double[] ModifiedBuffer { get; set; }
+        public WaveFormat FileFormat { get; set; }
 
         public EffectParametresWindow() : base() {}
+
+        protected virtual void ApplyEffect() { }
 
 
         private void InitializeComponent() {

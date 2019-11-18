@@ -13,8 +13,28 @@ using CollectionUtils;
 using GeneralUtils;
 
 namespace SignalProcessingUnit {
+
+    public struct Selection {
+        private Rectangle? _selectionRectangle;
+        private double[] _buffer;
+        private int _originStartPoint;
+        private int _originEndPoint;
+
+        public Rectangle? SelectionRectangle { get => _selectionRectangle; set => _selectionRectangle = value; }
+        public double[] Buffer { get => _buffer; set => _buffer = value; }
+        public int OriginStartPoint { get => _originStartPoint; set => _originStartPoint = value; }
+        public int OriginEndPoint { get => _originEndPoint; set => _originEndPoint = value; }
+        public bool IsEmpty { get => this._selectionRectangle?.IsEmpty ?? true; }
+
+        public void Clear() {
+            this._selectionRectangle = new Rectangle(0, 0, 0, 0);
+            this._originEndPoint = this._originStartPoint = 0;
+            this._buffer = null;
+        }
+    }
+
     //TODO: RYSUJ KURWA W KONTROLCE, NIE CONTROLPAINT CIULU
-    public partial class TrackViewer : UserControl {
+     public partial class TrackViewer : UserControl {
 
         private WaveFile _file;
         private int _samplesPerPixel = 128;
@@ -42,18 +62,19 @@ namespace SignalProcessingUnit {
         }
 
         public bool HasSelection {
-            get => !this._selection.IsEmpty;
+            get => !this.Selection.IsEmpty;
         }
 
         public double[] SelectionBuffer {
             get => this._selectionBuffer;
         }
+        public Rectangle Selection { get => _selection; set => _selection = value; }
 
         public TrackViewer() {
             InitializeComponent();
             this.DoubleBuffered = true;
             this._verticalLineCoords = new List<int>();
-            this._selection = new Rectangle();
+            this.Selection = new Rectangle();
         }
 
         private void TrackViewer_SizeChanged(object sender, EventArgs e) {
@@ -74,8 +95,8 @@ namespace SignalProcessingUnit {
         }
 
         private void FillSelectionRect(PaintEventArgs e) {
-            if (this._selection.IsEmpty) return;
-            e.Graphics.FillRectangle(Brushes.DarkGray, this._selection);
+            if (this.Selection.IsEmpty) return;
+            e.Graphics.FillRectangle(Brushes.DarkGray, this.Selection);
         }
 
         protected override void OnPaint(PaintEventArgs e) {
@@ -83,7 +104,7 @@ namespace SignalProcessingUnit {
             this.FillSelectionRect(e);
             this.PaintTrackWaveForm(e);
             this._verticalLineCoords.Clear();
-            this._selection = new Rectangle();
+            this.Selection = new Rectangle();
             base.OnPaint(e);
         }
 
@@ -113,7 +134,7 @@ namespace SignalProcessingUnit {
                 if (x2 > x1) {
                     GeneralUtilities.Swap(ref x2, ref x1);
                 }
-                this._selection = new Rectangle(x2, 0, x1 - x2, this.Height);
+                this.Selection = new Rectangle(x2, 0, x1 - x2, this.Height);
                 this.MapSelectionToSound();
             }
             base.OnMouseUp(e);
@@ -132,7 +153,7 @@ namespace SignalProcessingUnit {
                         GeneralUtilities.Swap(ref x2, ref x1);
                     }
 
-                    this._selection = new Rectangle(x2, 0, x1 - x2, this.Height);
+                    this.Selection = new Rectangle(x2, 0, x1 - x2, this.Height);
                 }
                 _mousePosition = e.Location;
                 this.Invalidate();
@@ -144,7 +165,7 @@ namespace SignalProcessingUnit {
 
         private void ClearSelection() {
             this._verticalLineCoords.Clear();
-            this._selection = new Rectangle();
+            this.Selection = new Rectangle();
             this._selectionBuffer = null;
             this.Invalidate();
         }
@@ -157,10 +178,10 @@ namespace SignalProcessingUnit {
         }
 
         private void MapSelectionToSound() {
-            if (this._selection.IsEmpty) return;
+            if (this.Selection.IsEmpty) return;
             int start = 0, end = 0;
-            start = this._selection.X * this._samplesPerPixel;
-            end = (this._selection.Width + this._selection.X) * this._samplesPerPixel;
+            start = this.Selection.X * this._samplesPerPixel;
+            end = (this.Selection.Width + this.Selection.X) * this._samplesPerPixel;
             if (start > end) {
                 GeneralUtilities.Swap(ref start, ref end);
             }
