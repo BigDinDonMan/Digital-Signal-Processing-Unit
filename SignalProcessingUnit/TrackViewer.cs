@@ -14,7 +14,7 @@ using GeneralUtils;
 
 namespace SignalProcessingUnit {
 
-    public struct Selection {
+    public class Selection {
         private Rectangle? _selectionRectangle;
         private double[] _buffer;
         private int _originStartPoint;
@@ -38,9 +38,9 @@ namespace SignalProcessingUnit {
 
         private WaveFile _file;
         private int _samplesPerPixel = 128;
-        private List<int> _verticalLineCoords;
-        private Rectangle _selection;
-        private double[] _selectionBuffer;
+        private Selection _selection;
+
+        #region Properties
 
         public WaveFile File {
             get => _file;
@@ -65,18 +65,20 @@ namespace SignalProcessingUnit {
             get => !this.Selection.IsEmpty;
         }
 
-        public double[] SelectionBuffer {
-            get => this._selectionBuffer;
+        public Selection Selection {
+            get => _selection;
+            set => _selection = value;
         }
-        public Rectangle Selection { get => _selection; set => _selection = value; }
+        
+        #endregion
 
         public TrackViewer() {
             InitializeComponent();
             this.DoubleBuffered = true;
-            this._verticalLineCoords = new List<int>();
-            this.Selection = new Rectangle();
+            this._selection = new Selection();
         }
 
+        #region Events
         private void TrackViewer_SizeChanged(object sender, EventArgs e) {
             this.ClearSelection();
             this.FitToScreen();
@@ -85,26 +87,25 @@ namespace SignalProcessingUnit {
         private void TrackViewer_Load(object sender, EventArgs e) {
             this.Refresh();
         }
+        #endregion
 
+        #region Painting events
         private void DrawVerticalLine(PaintEventArgs e, int x) {
             e.Graphics.DrawLine(Pens.Black, x, 0, x, this.Height);
         }
 
-        private void PaintVerticalLines(PaintEventArgs e) {
-            this._verticalLineCoords.ForEach(x => this.DrawVerticalLine(e, x));
-        }
+        //private void PaintVerticalLines(PaintEventArgs e) {
+        //    this._verticalLineCoords.ForEach(x => this.DrawVerticalLine(e, x));
+        //}
 
         private void FillSelectionRect(PaintEventArgs e) {
             if (this.Selection.IsEmpty) return;
-            e.Graphics.FillRectangle(Brushes.DarkGray, this.Selection);
+            e.Graphics.FillRectangle(Brushes.DarkGray, this.Selection.SelectionRectangle.Value);
         }
 
         protected override void OnPaint(PaintEventArgs e) {
-            this.PaintVerticalLines(e);
             this.FillSelectionRect(e);
             this.PaintTrackWaveForm(e);
-            this._verticalLineCoords.Clear();
-            this.Selection = new Rectangle();
             base.OnPaint(e);
         }
 
@@ -118,7 +119,6 @@ namespace SignalProcessingUnit {
                 _startPosition = e.Location;
                 _mouseDragging = true;
                 _mousePosition = new Point(-1, -1);
-              //  this._verticalLineCoords.Add(e.X);
                 this.Invalidate();
             }
             base.OnMouseDown(e);
@@ -134,7 +134,7 @@ namespace SignalProcessingUnit {
                 if (x2 > x1) {
                     GeneralUtilities.Swap(ref x2, ref x1);
                 }
-                this.Selection = new Rectangle(x2, 0, x1 - x2, this.Height);
+                this.Selection.SelectionRectangle = new Rectangle(x2, 0, x1 - x2, this.Height);
                 this.MapSelectionToSound();
             }
             base.OnMouseUp(e);
@@ -153,7 +153,7 @@ namespace SignalProcessingUnit {
                         GeneralUtilities.Swap(ref x2, ref x1);
                     }
 
-                    this.Selection = new Rectangle(x2, 0, x1 - x2, this.Height);
+                    this.Selection.SelectionRectangle = new Rectangle(x2, 0, x1 - x2, this.Height);
                 }
                 _mousePosition = e.Location;
                 this.Invalidate();
@@ -164,9 +164,6 @@ namespace SignalProcessingUnit {
         #endregion
 
         private void ClearSelection() {
-            this._verticalLineCoords.Clear();
-            this.Selection = new Rectangle();
-            this._selectionBuffer = null;
             this.Invalidate();
         }
 
@@ -180,12 +177,14 @@ namespace SignalProcessingUnit {
         private void MapSelectionToSound() {
             if (this.Selection.IsEmpty) return;
             int start = 0, end = 0;
-            start = this.Selection.X * this._samplesPerPixel;
-            end = (this.Selection.Width + this.Selection.X) * this._samplesPerPixel;
+            start = this.Selection.SelectionRectangle.Value.X * this._samplesPerPixel;
+            end = (this.Selection.SelectionRectangle.Value.Width + this.Selection.SelectionRectangle.Value.X) * this._samplesPerPixel;
             if (start > end) {
                 GeneralUtilities.Swap(ref start, ref end);
             }
-            this._selectionBuffer = this._file.SoundBuffer.Slice(start, end - start);
+            this._selection.Buffer = this._file.SoundBuffer.Slice(start, end - start);
+            this._selection.OriginEndPoint = end;
+            this._selection.OriginStartPoint = start;
         }
 
         private void PaintTrackWaveForm(PaintEventArgs e) {
@@ -218,5 +217,6 @@ namespace SignalProcessingUnit {
                 min = max = 0;
             }
         }
+        #endregion
     }
 }
