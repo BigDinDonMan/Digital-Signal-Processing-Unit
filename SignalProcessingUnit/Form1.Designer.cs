@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            SignalProcessingUnit.Selection selection1 = new SignalProcessingUnit.Selection();
             this.trackViewer1 = new SignalProcessingUnit.TrackViewer();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -32,6 +33,7 @@
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filtersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.processingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -39,9 +41,15 @@
             // 
             this.trackViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trackViewer1.File = null;
+            this.trackViewer1.IsSelected = false;
             this.trackViewer1.Location = new System.Drawing.Point(0, 28);
             this.trackViewer1.Name = "trackViewer1";
             this.trackViewer1.SamplesPerPixel = 128;
+            selection1.Buffer = null;
+            selection1.OriginEndPoint = 0;
+            selection1.OriginStartPoint = 0;
+            selection1.SelectionRectangle = null;
+            this.trackViewer1.Selection = selection1;
             this.trackViewer1.Size = new System.Drawing.Size(800, 422);
             this.trackViewer1.TabIndex = 2;
             this.trackViewer1.Load += new System.EventHandler(this.trackViewer1_Load);
@@ -64,7 +72,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshToolStripMenuItem});
+            this.refreshToolStripMenuItem,
+            this.playToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
             this.fileToolStripMenuItem.Text = "File";
@@ -72,7 +81,7 @@
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
@@ -87,7 +96,7 @@
             // clearSelectionToolStripMenuItem
             // 
             this.clearSelectionToolStripMenuItem.Name = "clearSelectionToolStripMenuItem";
-            this.clearSelectionToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.clearSelectionToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.clearSelectionToolStripMenuItem.Text = "Clear selection";
             this.clearSelectionToolStripMenuItem.Click += new System.EventHandler(this.clearSelectionToolStripMenuItem_Click);
             // 
@@ -108,6 +117,13 @@
             this.processingToolStripMenuItem.Name = "processingToolStripMenuItem";
             this.processingToolStripMenuItem.Size = new System.Drawing.Size(91, 24);
             this.processingToolStripMenuItem.Text = "Processing";
+            // 
+            // playToolStripMenuItem
+            // 
+            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.playToolStripMenuItem.Text = "Play";
+            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -138,6 +154,7 @@
         private System.Windows.Forms.ToolStripMenuItem filtersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem processingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearSelectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
     }
 }
 

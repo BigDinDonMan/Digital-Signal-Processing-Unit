@@ -34,11 +34,21 @@ namespace SignalProcessingUnit {
     }
 
     //TODO: RYSUJ KURWA W KONTROLCE, NIE CONTROLPAINT CIULU
+    //TODO: change background color when TrackViewer is selected
      public partial class TrackViewer : UserControl {
+
+        private static List<TrackViewer> _trackViewers = new List<TrackViewer>();
+        private static void RemoveSelections(TrackViewer exception) {
+            _trackViewers.ForEach(viewer => {
+                if (ReferenceEquals(viewer, exception)) return;
+                viewer.IsSelected = false;
+            });
+        }
 
         private WaveFile _file;
         private int _samplesPerPixel = 128;
         private Selection _selection;
+        private bool _isSelected = false;
 
         #region Properties
 
@@ -69,13 +79,24 @@ namespace SignalProcessingUnit {
             get => _selection;
             set => _selection = value;
         }
-        
+        public bool IsSelected {
+            get => _isSelected;
+            set {
+                _isSelected = value;
+                this.BackColor = !this._isSelected ? default(Color) : Color.LightBlue;
+                this.Invalidate();
+            }
+        }
+
+        public static List<TrackViewer> TrackViewers { get => _trackViewers; set => _trackViewers = value; }
+
         #endregion
 
-        public TrackViewer() {
+        public TrackViewer() : base() {
             InitializeComponent();
             this.DoubleBuffered = true;
             this._selection = new Selection();
+            _trackViewers.Add(this);
         }
 
         #region Events
@@ -89,18 +110,21 @@ namespace SignalProcessingUnit {
         }
         #endregion
 
+        public void ClearSelection() {
+            this.Selection.Clear();
+            this.IsSelected = false;
+        }
+
         #region Painting events
         private void DrawVerticalLine(PaintEventArgs e, int x) {
             e.Graphics.DrawLine(Pens.Black, x, 0, x, this.Height);
         }
 
-        //private void PaintVerticalLines(PaintEventArgs e) {
-        //    this._verticalLineCoords.ForEach(x => this.DrawVerticalLine(e, x));
-        //}
-
         private void FillSelectionRect(PaintEventArgs e) {
             if (this.Selection.IsEmpty) return;
             e.Graphics.FillRectangle(Brushes.DarkGray, this.Selection.SelectionRectangle.Value);
+            this.DrawVerticalLine(e, this.Selection.SelectionRectangle.Value.X);
+            this.DrawVerticalLine(e, this.Selection.SelectionRectangle.Value.X + this.Selection.SelectionRectangle.Value.Width);
         }
 
         protected override void OnPaint(PaintEventArgs e) {
@@ -109,12 +133,16 @@ namespace SignalProcessingUnit {
             base.OnPaint(e);
         }
 
+
+
         #region mouse handler functions and fields
 
         private bool _mouseDragging = false;
         private Point _mousePosition, _startPosition;
 
         protected override void OnMouseDown(MouseEventArgs e) {
+            RemoveSelections(this);
+            this.IsSelected = true;
             if (e.Button == MouseButtons.Left) {
                 _startPosition = e.Location;
                 _mouseDragging = true;
@@ -142,17 +170,13 @@ namespace SignalProcessingUnit {
 
         protected override void OnMouseMove(MouseEventArgs e) {
             if (_mouseDragging) {
-               // this._verticalLineCoords.Add(_startPosition.X);
-              //  this._verticalLineCoords.Add(e.X);
                 if (_mousePosition.X != -1) {
-                 //   this._verticalLineCoords.Add(_mousePosition.X);
                     int x1, x2;
                     x1 = _mousePosition.X;
                     x2 = _startPosition.X;
                     if (x2 > x1) {
                         GeneralUtilities.Swap(ref x2, ref x1);
                     }
-
                     this.Selection.SelectionRectangle = new Rectangle(x2, 0, x1 - x2, this.Height);
                 }
                 _mousePosition = e.Location;
@@ -162,11 +186,6 @@ namespace SignalProcessingUnit {
         }
 
         #endregion
-
-        private void ClearSelection() {
-            this.Invalidate();
-        }
-
 
         public void FitToScreen() {
             if (_file == null || _file.SoundBuffer == null) return;
