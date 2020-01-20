@@ -1,5 +1,5 @@
-﻿namespace SignalProcessingUnit.Windows.Processing {
-    partial class RaiseSignalVolumeWindow {
+﻿namespace SignalProcessingUnit.Windows {
+    partial class ConfigurationWindow {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -25,14 +25,13 @@
         private void InitializeComponent() {
             this.SuspendLayout();
             // 
-            // RaiseSignalVolumeWindow
+            // ConfigurationWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "RaiseSignalVolumeWindow";
-            this.Text = "RaiseSignalVolumeWindow";
-            this.Load += new System.EventHandler(this.RaiseSignalVolumeWindow_Load);
+            this.ClientSize = new System.Drawing.Size(426, 307);
+            this.Name = "ConfigurationWindow";
+            this.Text = "ConfigurationWindow";
             this.ResumeLayout(false);
 
         }

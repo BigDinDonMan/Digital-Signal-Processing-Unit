@@ -1,0 +1,6 @@
+[submodule "Digital-Sound-Effects"]
+	path = Digital-Sound-Effects
+	url = https://github.com/BigDinDonMan/Digital-Sound-Effects
+[submodule "Utilities"]
+	path = Utilities
+	url = https://github.com/BigDinDonMan/Utilities

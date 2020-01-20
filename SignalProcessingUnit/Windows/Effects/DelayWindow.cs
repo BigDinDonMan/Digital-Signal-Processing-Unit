@@ -27,11 +27,12 @@ namespace SignalProcessingUnit.Windows.Effects {
             this.comboBox1.SelectedItem = values[0];
         }
 
-        protected override void ApplyEffect() {
+        protected override bool ApplyEffect() {
             var delayUnit = (DelayUnit)this.comboBox1.SelectedItem;
             var delayValue = (int)Int32.Parse(this.textBox1.Text);
             var result = SoundEffects.Delay(this.BufferToModify, this.FileFormat, delayValue, delayUnit);
             this.ModifiedBuffer = result;
+            return true;
         }
 
         private void TextBox1_KeyPress(object sender, KeyPressEventArgs e) {

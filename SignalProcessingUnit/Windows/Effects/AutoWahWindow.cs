@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SignalProcessingUnit.Windows.Processing {
-    public partial class RaiseSignalVolumeWindow : EffectParametresWindow {
-        public RaiseSignalVolumeWindow() {
+namespace SignalProcessingUnit.Windows.Effects {
+    public partial class AutoWahWindow : EffectParametresWindow {
+        public AutoWahWindow() {
             InitializeComponent();
         }
 
-        private void RaiseSignalVolumeWindow_Load(object sender, EventArgs e) {
-
+        protected override bool ApplyEffect() {
+            return base.ApplyEffect();
         }
     }
 }

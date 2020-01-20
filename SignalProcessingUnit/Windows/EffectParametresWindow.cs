@@ -14,7 +14,7 @@ namespace SignalProcessingUnit.Windows {
 
         public EffectParametresWindow() : base() {}
 
-        protected virtual void ApplyEffect() { }
+        protected virtual bool ApplyEffect() { return false; }
 
 
         private void InitializeComponent() {
